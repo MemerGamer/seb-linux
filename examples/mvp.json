@@ -1,0 +1,13 @@
+{
+    "startUrl": "https://example.com/exam",
+    "allowedDomains": [
+        "example.com",
+        "cdn.example.com",
+        "api.example.com"
+    ],
+    "userAgentSuffix": "SEB-Linux/1.0",
+    "clientVersion": "0.1.0",
+    "clientType": "SEB-Linux",
+    "sendConfigKey": true
+}
+

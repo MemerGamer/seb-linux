@@ -1,11 +1,30 @@
-# Prerequisites
-*.d
+# Build directories
+build/
+build-*/
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+CMakeScripts/
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+*.cmake
+!CMakeLists.txt
+!**/CMakeLists.txt
+
+# Ninja
+build.ninja
+rules.ninja
+.ninja_deps
+.ninja_log
 
 # Compiled Object files
-*.slo
-*.lo
 *.o
+*.lo
 *.obj
+*.slo
 
 # Precompiled Headers
 *.gch
@@ -22,20 +41,58 @@
 *.dylib
 *.dll
 
-# Fortran module files
-*.mod
-*.smod
-
 # Compiled Static libraries
-*.lai
-*.la
 *.a
 *.lib
+*.lai
+*.la
 
 # Executables
 *.exe
 *.out
 *.app
+!**/seb-linux  # Keep the actual executable name pattern (but build/ is ignored)
 
-# debug information files
+# Qt MOC/AUTOGEN
+*_autogen/
+moc_*.cpp
+moc_*.h
+qrc_*.cpp
+ui_*.h
+
+# Debug information
+*.dSYM/
 *.dwo
+*.dwp
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Temporary files
+*.tmp
+*.bak
+*.cache
+*.log
+
+# Test executables
+test_config
+**/test_*
+
+# Package files
+*.deb
+*.rpm
+*.tar.gz
+*.zip
+
+# Flatpak build directories
+flatpak-builder/
+repo/
+build-dir/
+
+# Local test files
+/tmp/test_*.json

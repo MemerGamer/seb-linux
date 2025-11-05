@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Install build dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y \
+          build-essential \
+          cmake \
+          ninja-build \
+          qt6-base-dev \
+          qt6-webengine-dev \
+          qt6-tools-dev \
+          qt6-tools-dev-tools
+    
+    - name: Configure build
+      run: |
+        cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
+    
+    - name: Build
+      run: |
+        cmake --build build
+    
+    - name: Run config loader tests
+      working-directory: ${{ github.workspace }}
+      run: |
+        ./build/src/core/test_config
+    
+    - name: Verify executable exists
+      run: |
+        test -f build/src/app/seb-linux && echo "✓ Executable built successfully" || (echo "✗ Executable not found" && exit 1)
+

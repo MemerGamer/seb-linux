@@ -1,0 +1,41 @@
+app-id: io.seb.linux
+runtime: org.kde.Platform
+runtime-version: '6.6'
+sdk: org.kde.Sdk
+sdk-version: '6.6'
+command: seb-linux
+finish-args:
+  # Network access (required for web browsing)
+  - --share=network
+  # Wayland and X11 support
+  - --socket=wayland
+  - --socket=x11
+  # XDG cache directory (for WebEngine cache)
+  - --filesystem=xdg-cache:create
+  # No host filesystem access (except cache)
+  - --no-filesystem=host
+  # Allow DBus for idle inhibition
+  - --talk-name=org.freedesktop.ScreenSaver
+  - --talk-name=org.gnome.SessionManager
+modules:
+  - name: seb-linux
+    buildsystem: cmake-ninja
+    build-options:
+      cflags: -O2 -g
+      cxxflags: -O2 -g
+      ldflags: -Wl,--as-needed
+    sources:
+      - type: dir
+        path: ../..
+    config-opts:
+      - -DCMAKE_BUILD_TYPE=Release
+      - -DCMAKE_INSTALL_PREFIX=/app
+      - -DCMAKE_INSTALL_LIBDIR=lib
+    post-install:
+      - |
+        # Install the executable
+        install -Dm755 build/src/app/seb-linux ${FLATPAK_DEST}/bin/seb-linux || exit 1
+        # Create share directory and install example config
+        mkdir -p ${FLATPAK_DEST}/share/seb-linux/examples
+        install -Dm644 examples/mvp.json ${FLATPAK_DEST}/share/seb-linux/examples/mvp.json || true
+
