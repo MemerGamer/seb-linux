@@ -1,0 +1,35 @@
+[package]
+name = "seb-compositor"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "seb-compositor"
+path = "src/main.rs"
+
+[dependencies]
+smithay = { version = "0.7", features = [
+    "backend_libinput",
+    "backend_drm",
+    "backend_gbm",
+    "backend_udev",
+    "backend_session",
+    "backend_session_libseat",
+    "backend_egl",
+    "renderer_gl",
+    "renderer_multi",
+    "wayland_frontend",
+    "desktop",
+] }
+smithay-drm-extras = { version = "0.1", default-features = false }
+calloop = "0.14"
+calloop-wayland-source = "0.3"
+wayland-server = "0.31"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+anyhow = "1"
+thiserror = "1"
+nix = { version = "0.29", features = ["signal", "process"] }
+libc = "0.2"
+xkbcommon = "0.9"
+wayland-protocols = "0.32"
